@@ -34,4 +34,18 @@ describe('UsersModule (Queries e Mutations)', () => {
     });
     done();
   });
+
+  it('Valid Users query', done => {
+    const query: string = `
+      query users {
+        users {
+          id
+          name
+          email
+        }
+      }
+    `;
+    tester.test(true, query);
+    done();
+  });
 });
