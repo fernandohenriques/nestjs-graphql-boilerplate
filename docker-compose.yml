@@ -1,0 +1,45 @@
+version: "3.4"
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        - PORT=${PORT}
+        - NODE_ENV=${NODE_ENV}
+    user: node
+    working_dir: /home/node/app
+    env_file:
+      - ./.env
+    volumes:
+      - ./src:/home/node/app/src
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - mongodb
+    networks:
+      - mynet
+    command: "npm run start:dev"
+
+  mongodb:
+    container_name: ${MONGO_HOST}
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DATABASE_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    volumes:
+      - ./docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - mongo-storage:/data/db
+    networks:
+      - mynet
+
+volumes:
+  mongo-storage: {}
+
+networks:
+  mynet:
