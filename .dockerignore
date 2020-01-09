@@ -1,0 +1,14 @@
+*/docker*
+*/*/node_modules*
+
+.env
+npm-debug.log
+.dockerignore
+.editorconfig
+.git
+.gitignore
+Dockerfile*
+docker-compose*
+README.md
+LICENSE
+.vscode
