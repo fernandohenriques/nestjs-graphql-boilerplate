@@ -1,7 +1,7 @@
 {
-  "name": "helpet-api",
+  "name": "nestjs-graphql-boilerplate",
   "version": "1.0.0",
-  "description": "Helpet API",
+  "description": "NestJS Boilerplate",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -73,10 +73,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/helpetapp/helpet-api.git"
+    "url": "git+https://github.com/fernandohenriques/nestjs-graphql-boilerplate.git"
   },
   "bugs": {
-    "url": "https://github.com/helpetapp/helpet-api/issues"
+    "url": "https://github.com/fernandohenriques/nestjs-graphql-boilerplate/issues"
   },
-  "homepage": "https://github.com/helpetapp/helpet-api#readme"
+  "homepage": "https://github.com/fernandohenriques/nestjs-graphql-boilerplate#readme"
 }
