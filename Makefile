@@ -1,10 +1,11 @@
 # You can change the default variables with `make variables="other.env" build`
 variables ?= .env
+args = $(filter-out $@,$(MAKECMDGOALS))
+
 include $(variables)
 export $(shell sed 's/=.*//' $(variables))
 
-# DOCKER TASKS
-build: ## Build the container
+build:
 	docker build \
     -f ./docker/Dockerfile \
     -t $(APP_NAME) \
@@ -12,20 +13,20 @@ build: ## Build the container
     --build-arg PORT=$(PORT) \
     .
 
-run: ## Run container on port configured in `.env`
+run:
 	docker run -i -t \
     --env-file ./.env \
     --name $(APP_NAME) \
     --user node \
     $(APP_NAME)
 
-up: build run ## Build and Run container on port configured in `.env`
+up: build run
 
-stop: ## Stop the running container
-	docker stop $(APP_NAME); docker rm $(APP_NAME)
+stop:
+	docker stop $(MONGO_HOST) || true; docker rm $(MONGO_HOST) || true
+	docker stop $(APP_NAME) || true; docker rm $(APP_NAME) || true
 
-# CI TASKS
-test: build ## Build container on port configured in `.env` and run mongo:latest to run tests pipeline
+test: stop build
 	docker run -d -it \
     --name $(MONGO_HOST) \
     -e "MONGO_INITDB_DATABASE=$(MONGO_DATABASE_NAME)" \
@@ -35,12 +36,18 @@ test: build ## Build container on port configured in `.env` and run mongo:latest
     -v "$(PWD)/docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh" \
     mongo:latest
 	docker run -i -t \
-    --env-file ./.env \
+    --env-file $(variables) \
     --name $(APP_NAME) \
     --user node \
     --link $(MONGO_HOST):$(MONGO_HOST) \
     $(APP_NAME) \
     /bin/sh -c "npm run test && npm run test:e2e && npm run test:graphql"
 
-stop-mongo: ## Stop the mongodb running container
-	docker stop $(MONGO_HOST); docker rm $(MONGO_HOST)
+# DEVELOPMENT TASKS
+install:
+	npm install $(args) --save
+	docker exec -it $(APP_NAME) npm install $(args) --save
+
+uninstall:
+	npm uninstall $(args) --save
+	docker exec -it $(APP_NAME) npm uninstall $(args) --save
