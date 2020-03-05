@@ -15,10 +15,14 @@ describe('UsersResolver (e2e)', () => {
     await app.init();
   });
 
-  it('Query helloWorld', done => {
+  it('Query Users', done => {
     const query = {
       query: `{
-        helloWorld
+        users {
+          id
+          name
+          email
+        }
       }`,
     };
 
@@ -29,7 +33,7 @@ describe('UsersResolver (e2e)', () => {
         expect(response.status).toBe(200);
         expect(response.body.data).toEqual(
           expect.objectContaining({
-            helloWorld: expect.any(String),
+            users: [],
           }),
         );
         done();

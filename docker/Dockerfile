@@ -2,7 +2,7 @@ FROM node:13.5-alpine
 
 RUN apk update && apk add bash
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app/node_modules
 
 ARG PORT
 ARG NODE_ENV
@@ -17,9 +17,10 @@ COPY package*.json ./
 RUN npm install
 RUN chown -R node:node /home/node/.npm-global
 
-USER node
-
 COPY . .
+RUN chown -R node:node /home/node/app
+
+USER node
 
 EXPOSE $PORT
 
