@@ -1,11 +1,14 @@
+import { Validator } from 'class-validator';
 import { CustomScalar, Scalar } from '@nestjs/graphql';
 import { Kind } from 'graphql';
 
 @Scalar('Date', type => Date)
-export class DateScalar implements CustomScalar<number, Date> {
+export class DateScalar implements CustomScalar<number | string, Date> {
   description = 'Date custom scalar type';
 
-  parseValue(value: number): Date {
+  private validator = new Validator();
+
+  parseValue(value: number | string): Date {
     return new Date(value);
   }
 
@@ -13,10 +16,13 @@ export class DateScalar implements CustomScalar<number, Date> {
     return value.getTime();
   }
 
-  parseLiteral(ast: any): Date {
-    if (ast.kind === Kind.INT) {
+  parseLiteral(ast: any): Date | null {
+    if (
+      (ast.kind === Kind.INT || ast.kind === Kind.STRING) &&
+      this.validator.isISO8601(ast.value)
+    ) {
       return new Date(ast.value);
     }
-    return null;
+    throw new Error('Date cannot represent an invalid ISO-8601 Date string');
   }
 }

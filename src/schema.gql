@@ -5,12 +5,15 @@
 
 input CreateUserInput {
   name: String!
-  email: String!
-  birthdate: Date
+  email: Email!
+  birthDate: Date
 }
 
 """Date custom scalar type"""
 scalar Date
+
+"""Email custom scalar type"""
+scalar Email
 
 type Mutation {
   createUser(userInput: CreateUserInput!): User!
@@ -24,8 +27,9 @@ type Query {
 type User {
   id: ID!
   name: String!
-  email: String!
+  email: Email!
+  telephone: String!
+  birthDate: Date
   createdAt: Date!
   updatedAt: Date!
-  birthdate: Date
 }

@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from 'type-graphql';
+import { EmailScalar as Email } from '../../common/scalars/email.scalar';
 import {
   Column,
   Entity,
@@ -19,9 +20,17 @@ export class UserEntity {
   @Column()
   name: string;
 
-  @Field()
+  @Field(type => Email)
   @Column()
   email: string;
+
+  @Field()
+  @Column()
+  telephone: string;
+
+  @Field({ nullable: true })
+  @Column()
+  birthDate?: Date;
 
   @Field()
   @CreateDateColumn({ type: 'timestamp' })
@@ -30,8 +39,4 @@ export class UserEntity {
   @Field()
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt?: Date;
-
-  @Field({ nullable: true })
-  @Column()
-  birthdate?: Date;
 }

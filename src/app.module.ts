@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { DateScalar } from './common/scalars/date.scalar';
+import { EmailScalar } from './common/scalars/email.scalar';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { DateScalar } from './common/scalars/date.scalar';
     }),
     UsersModule,
   ],
-  providers: [DateScalar],
+  providers: [DateScalar, EmailScalar],
 })
 export class AppModule {}
