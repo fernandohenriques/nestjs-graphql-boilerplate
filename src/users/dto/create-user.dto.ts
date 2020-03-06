@@ -14,5 +14,9 @@ export class CreateUserDto {
 
   @Field({ nullable: true })
   @IsOptional()
+  telephone?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
   birthDate?: Date;
 }

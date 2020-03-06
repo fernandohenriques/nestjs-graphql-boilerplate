@@ -6,6 +6,7 @@
 input CreateUserInput {
   name: String!
   email: Email!
+  telephone: String
   birthDate: Date
 }
 
@@ -28,7 +29,7 @@ type User {
   id: ID!
   name: String!
   email: Email!
-  telephone: String!
+  telephone: String
   birthDate: Date
   createdAt: Date!
   updatedAt: Date!

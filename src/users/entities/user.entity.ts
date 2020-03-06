@@ -24,9 +24,9 @@ export class UserEntity {
   @Column()
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  telephone: string;
+  telephone?: string;
 
   @Field({ nullable: true })
   @Column()
