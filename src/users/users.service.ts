@@ -10,10 +10,7 @@ import { ObjectID } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly serviceHelper: ServiceHelper,
-    private readonly userRepository: UserRepository,
-  ) {}
+  constructor(private readonly serviceHelper: ServiceHelper, private readonly userRepository: UserRepository) {}
 
   async findUserById(id: string): Promise<UserEntity> {
     return await this.userRepository.findOne({
@@ -25,16 +22,10 @@ export class UsersService {
   }
 
   async findUsers(params: FindUsersDto): Promise<ListUsersEntity> {
-    return await this.serviceHelper.findAllByNameOrIds(
-      params,
-      this.userRepository,
-    );
+    return await this.serviceHelper.findAllByNameOrIds(params, this.userRepository);
   }
 
-  async upsertUser(
-    id: string | undefined,
-    user: CreateUserDto,
-  ): Promise<UserEntity> {
+  async upsertUser(id: string | undefined, user: CreateUserDto): Promise<UserEntity> {
     const { email }: { email: string } = user;
     const userExists: UserEntity = await this.userRepository.findOne({
       where: {
@@ -47,11 +38,7 @@ export class UsersService {
       throw new Error(`E-mail ${email} is already in use.`);
     }
 
-    const newUser: UserEntity = await this.serviceHelper.getUpsertData(
-      id,
-      user,
-      this.userRepository,
-    );
+    const newUser: UserEntity = await this.serviceHelper.getUpsertData(id, user, this.userRepository);
 
     return this.userRepository.save({ ...newUser, active: true });
   }

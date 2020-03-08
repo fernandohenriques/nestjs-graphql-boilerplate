@@ -7,10 +7,7 @@ describe('UsersModule (Queries e Mutations)', () => {
   let tester: any;
 
   beforeAll(() => {
-    const schema: any = fs.readFileSync(
-      path.join(__dirname, '../../src', 'schema.gql'),
-      'utf8',
-    );
+    const schema: any = fs.readFileSync(path.join(__dirname, '../../src', 'schema.gql'), 'utf8');
     tester = new EasyGraphQLTester(schema);
   });
 

@@ -17,10 +17,7 @@ export class DateScalar implements CustomScalar<number | string, Date> {
   }
 
   parseLiteral(ast: any): Date | null {
-    if (
-      (ast.kind === Kind.INT || ast.kind === Kind.STRING) &&
-      this.validator.isISO8601(ast.value)
-    ) {
+    if ((ast.kind === Kind.INT || ast.kind === Kind.STRING) && this.validator.isISO8601(ast.value)) {
       return new Date(ast.value);
     }
     throw new Error('Date cannot represent an invalid ISO-8601 Date string');

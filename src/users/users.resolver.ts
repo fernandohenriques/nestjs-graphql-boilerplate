@@ -28,17 +28,12 @@ export class UsersResolver {
 
   @Mutation(returns => User)
   async saveUser(@Args() mutationArgs: UpsertUserDto): Promise<User> {
-    const {
-      id,
-      userInput,
-    }: { id?: string; userInput: CreateUserDto } = mutationArgs;
+    const { id, userInput }: { id?: string; userInput: CreateUserDto } = mutationArgs;
     return this.usersService.upsertUser(id, userInput);
   }
 
   @Mutation(returns => Boolean)
-  deleteLocation(
-    @Args({ name: 'id', type: () => ID }) id: string,
-  ): Promise<boolean> {
+  deleteLocation(@Args({ name: 'id', type: () => ID }) id: string): Promise<boolean> {
     return this.usersService.deleteUser(id);
   }
 }

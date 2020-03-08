@@ -9,9 +9,7 @@ export class EmailScalar implements CustomScalar<string, string> {
   private EMAIL_ADDRESS_REGEX: RegExp = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   constructor() {
-    this.EMAIL_ADDRESS_REGEX = new RegExp(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-    );
+    this.EMAIL_ADDRESS_REGEX = new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
   }
 
   parseValue(value: string): string {
@@ -40,9 +38,7 @@ export class EmailScalar implements CustomScalar<string, string> {
 
   parseLiteral(ast: ValueNode): string {
     if (ast.kind !== Kind.STRING) {
-      throw new GraphQLError(
-        `Can only validate strings as email addresses but got a: ${ast.kind}`,
-      );
+      throw new GraphQLError(`Can only validate strings as email addresses but got a: ${ast.kind}`);
     }
 
     if (!this.EMAIL_ADDRESS_REGEX.test(ast.value)) {

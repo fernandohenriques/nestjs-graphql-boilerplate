@@ -1,13 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { EmailScalar as Email } from '../../common/scalars/email.scalar';
-import {
-  Column,
-  Entity,
-  ObjectID,
-  ObjectIdColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ObjectID, ObjectIdColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('User')
 @ObjectType('User')

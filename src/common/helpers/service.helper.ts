@@ -8,11 +8,7 @@ import { FindNameDto } from '../dto/find-name.dto';
 
 @Injectable()
 export class ServiceHelper {
-  async getUpsertData(
-    id: string | undefined,
-    fields: any,
-    repository: Repository<any>,
-  ): Promise<any> {
+  async getUpsertData(id: string | undefined, fields: any, repository: Repository<any>): Promise<any> {
     if (id) {
       return {
         ...(await repository.findOne(id)),
@@ -44,15 +40,10 @@ export class ServiceHelper {
     return $where;
   }
 
-  async findAllByNameOrIds(
-    dto: FindNameDto,
-    repository: Repository<any>,
-  ): Promise<any> {
+  async findAllByNameOrIds(dto: FindNameDto, repository: Repository<any>): Promise<any> {
     const { skip, take, ids, name, order, fieldSort }: FindNameDto = dto;
     const $order: findOrder = { [fieldSort]: order };
-    const $where: IWhereName | IWhereIds = ids
-      ? this.getWhereByIds(ids)
-      : this.getWhereByName(name);
+    const $where: IWhereName | IWhereIds = ids ? this.getWhereByIds(ids) : this.getWhereByName(name);
 
     const [result, count]: [any[], any[]] = await Promise.all([
       repository.find({
