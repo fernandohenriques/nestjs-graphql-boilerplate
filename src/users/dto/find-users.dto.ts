@@ -1,14 +1,5 @@
-import { Max, Min } from 'class-validator';
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType } from 'type-graphql';
+import { FindNameDto } from '../../common/dto/find-name.dto';
 
 @ArgsType()
-export class FindUsersDto {
-  @Field(type => Int)
-  @Min(0)
-  skip: number = 0;
-
-  @Field(type => Int)
-  @Min(1)
-  @Max(50)
-  limit: number = 25;
-}
+export class FindUsersDto extends FindNameDto {}

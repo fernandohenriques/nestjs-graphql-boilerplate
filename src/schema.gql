@@ -16,13 +16,19 @@ scalar Date
 """Email custom scalar type"""
 scalar Email
 
+type ListUsers {
+  items: [User!]!
+  total: Int!
+}
+
 type Mutation {
-  createUser(userInput: CreateUserInput!): User!
+  saveUser(id: ID, userInput: CreateUserInput!): User!
+  deleteLocation(id: ID!): Boolean!
 }
 
 type Query {
   user(id: String!): User!
-  users(skip: Int = 0, limit: Int = 25): [User!]!
+  users(skip: Int = 0, take: Int = 50, ids: [ID!], name: String, order: String = "DESC", fieldSort: String = "updatedAt"): ListUsers!
 }
 
 type User {

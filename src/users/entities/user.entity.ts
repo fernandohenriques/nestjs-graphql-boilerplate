@@ -39,4 +39,7 @@ export class UserEntity {
   @Field()
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt?: Date;
+
+  @Column()
+  active: boolean;
 }
