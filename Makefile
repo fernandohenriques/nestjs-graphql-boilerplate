@@ -1,4 +1,3 @@
-# You can change the default variables with `make variables="other.env" build`
 variables ?= .env
 args = $(filter-out $@,$(MAKECMDGOALS))
 
@@ -14,11 +13,12 @@ build:
     .
 
 run:
-	docker run -i -t \
-    --env-file ./.env \
+	docker run -d -i \
+    --env-file $(variables) \
     --name $(APP_NAME) \
-    --user node \
+    -p $(PORT):$(PORT) \
     $(APP_NAME)
+
 
 up: build run
 
@@ -27,7 +27,7 @@ stop:
 	docker stop $(APP_NAME) || true; docker rm $(APP_NAME) || true
 
 test: stop build
-	docker run -d -it \
+	docker run -d -i \
     --name $(MONGO_HOST) \
     -e "MONGO_INITDB_DATABASE=$(MONGO_DATABASE_NAME)" \
     -e "MONGO_INITDB_ROOT_USERNAME=$(MONGO_USERNAME)" \
@@ -35,13 +35,21 @@ test: stop build
     -p $(MONGO_PORT):$(MONGO_PORT) \
     -v "$(PWD)/docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh" \
     mongo:latest
+ifeq ($(NODE_ENV),development)
 	docker run -i -t \
     --env-file $(variables) \
     --name $(APP_NAME) \
-    --user node \
     --link $(MONGO_HOST):$(MONGO_HOST) \
     $(APP_NAME) \
     /bin/sh -c "npm run test && npm run test:e2e && npm run test:graphql"
+else
+	docker run -d -i \
+    --env-file $(variables) \
+    --name $(APP_NAME) \
+    --link $(MONGO_HOST):$(MONGO_HOST) \
+    $(APP_NAME) \
+    /bin/sh -c "npm run test && npm run test:e2e && npm run test:graphql"
+endif
 
 # DEVELOPMENT TASKS
 install:

@@ -58,6 +58,13 @@ $ cp .env.sample .env
 $ make test
 ```
 
+### Run tests on CI/CD pipeline
+
+```
+$ cd nestjs-graphql-boilerplate
+$ make variables=".env.test" test
+```
+
 ### Static Analysis
 
 ```
