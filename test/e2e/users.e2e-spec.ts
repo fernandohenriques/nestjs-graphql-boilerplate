@@ -19,9 +19,12 @@ describe('UsersResolver (e2e)', () => {
     const query = {
       query: `{
         users {
-          id
-          name
-          email
+          items {
+            id
+            name
+            email
+          }
+          total
         }
       }`,
     };
@@ -33,7 +36,10 @@ describe('UsersResolver (e2e)', () => {
         expect(response.status).toBe(200);
         expect(response.body.data).toEqual(
           expect.objectContaining({
-            users: [],
+            users: {
+              items: [],
+              total: 0,
+            },
           }),
         );
         done();

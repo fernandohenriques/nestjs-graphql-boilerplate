@@ -16,8 +16,8 @@ describe('UsersModule (Queries e Mutations)', () => {
     const email: string = faker.internet.email();
 
     const mutation: string = `
-      mutation createUser($user: CreateUserInput!) {
-        createUser(userInput: $user) {
+      mutation saveUser($user: CreateUserInput!) {
+        saveUser(userInput: $user) {
           name
           email
         }
@@ -36,9 +36,12 @@ describe('UsersModule (Queries e Mutations)', () => {
     const query: string = `
       query users {
         users {
-          id
-          name
-          email
+          items {
+            id
+            name
+            email
+          }
+          total
         }
       }
     `;
