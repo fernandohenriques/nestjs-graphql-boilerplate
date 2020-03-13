@@ -9,6 +9,6 @@ module.exports = {
   },
   rootDir: "src",
   testRegex: ".spec.ts$",
-  coverageDirectory: "coverage",
+  coverageDirectory: "../coverage",
   testEnvironment: "node"
 };
