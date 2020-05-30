@@ -18,12 +18,10 @@ export class UserEntity {
   @Column()
   email: string;
 
-  @Field(type => String)
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Field(type => [String])
-  // @Column()
   permissions: string[];
 
   @Field({ nullable: true })

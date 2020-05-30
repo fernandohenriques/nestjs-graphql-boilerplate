@@ -48,7 +48,6 @@ type User {
   id: ID!
   name: String!
   email: Email!
-  password: String!
   permissions: [String!]!
   telephone: String
   birthDate: Date
