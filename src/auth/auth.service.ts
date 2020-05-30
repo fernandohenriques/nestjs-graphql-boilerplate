@@ -55,9 +55,9 @@ export class AuthService {
         user: userToAttempt!,
         token,
       };
-      userToAttempt.updatedAt = new Date();
 
-      this.usersService.upsertUser(userToAttempt.id.toString(), userToAttempt);
+      userToAttempt.updatedAt = new Date();
+      this.usersService.updateUser(userToAttempt);
 
       return result;
     }
@@ -79,7 +79,7 @@ export class AuthService {
     // Ensure the user exists and their account isn't disabled
     if (user) {
       user.updatedAt = new Date();
-      return this.usersService.upsertUser(user.id.toString(), user);
+      return this.usersService.updateUser(user);
     }
 
     return undefined;

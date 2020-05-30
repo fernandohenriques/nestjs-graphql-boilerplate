@@ -76,6 +76,10 @@ export class UsersService {
     return this.userRepository.save({ ...newUser, active: true });
   }
 
+  async updateUser(user: UserEntity): Promise<UserEntity> {
+    return this.userRepository.save(user);
+  }
+
   async deleteUser(id: string): Promise<boolean> {
     const user: UserEntity = await this.userRepository.findOne(id);
     return Boolean(this.userRepository.save({ ...user, active: false }));

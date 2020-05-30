@@ -13,6 +13,7 @@ import { ConfigModule } from './config/config.module';
     GraphQLModule.forRoot({
       autoSchemaFile: 'src/schema.gql',
       debug: process.env.NODE_ENV === 'development',
+      context: ({ req }) => ({ req }),
     }),
     UsersModule,
     ConfigModule,
