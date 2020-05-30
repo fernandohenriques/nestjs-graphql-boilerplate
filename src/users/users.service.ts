@@ -7,6 +7,7 @@ import { ListUsersEntity } from './entities/list-users.entity';
 import { UserRepository } from './repositories/user.repository';
 import { ServiceHelper } from '../common/helpers/service.helper';
 import { ObjectID } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,6 +20,36 @@ export class UsersService {
         active: true,
       },
     });
+  }
+
+  /**
+   * Returns a user by their unique email address or undefined
+   *
+   * @param {string} email address of user, not case sensitive
+   * @returns {(Promise<UserDocument | undefined>)}
+   * @memberof UsersService
+   */
+  async findOneByEmail(email: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ email: email.toLowerCase() });
+    if (user) {
+      return user;
+    }
+    return undefined;
+  }
+
+  /**
+   * Returns a user by their unique username or undefined
+   *
+   * @param {string} username of user, not case sensitive
+   * @returns {(Promise<UserDocument | undefined>)}
+   * @memberof UsersService
+   */
+  async findOneByUsername(username: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ name: username.toLowerCase() });
+    if (user) {
+      return user;
+    }
+    return undefined;
   }
 
   async findUsers(params: FindUsersDto): Promise<ListUsersEntity> {
@@ -40,11 +71,24 @@ export class UsersService {
 
     const newUser: UserEntity = await this.serviceHelper.getUpsertData(id, user, this.userRepository);
 
+    newUser.password = await bcrypt.hash(newUser.password, 10);
+
     return this.userRepository.save({ ...newUser, active: true });
   }
 
   async deleteUser(id: string): Promise<boolean> {
     const user: UserEntity = await this.userRepository.findOne(id);
     return Boolean(this.userRepository.save({ ...user, active: false }));
+  }
+
+  /**
+   * Returns if the user has 'admin' set on the permissions array
+   *
+   * @param {string[]} permissions permissions property on a User
+   * @returns {boolean}
+   * @memberof UsersService
+   */
+  isAdmin(permissions: string[]): boolean {
+    return permissions.includes('admin');
   }
 }

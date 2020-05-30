@@ -7,6 +7,7 @@ import { ServiceHelper } from '../common/helpers/service.helper';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserRepository])],
+  exports: [UsersService],
   providers: [UsersService, UsersResolver, ServiceHelper],
 })
 export class UsersModule {}

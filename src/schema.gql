@@ -5,6 +5,7 @@
 
 input CreateUserInput {
   name: String!
+  password: String!
   email: Email!
   telephone: String
   birthDate: Date
@@ -21,6 +22,16 @@ type ListUsers {
   total: Int!
 }
 
+type LoginResult {
+  user: User!
+  token: String!
+}
+
+input LoginUserInput {
+  password: String!
+  email: Email!
+}
+
 type Mutation {
   saveUser(id: ID, userInput: CreateUserInput!): User!
   deleteLocation(id: ID!): Boolean!
@@ -29,12 +40,16 @@ type Mutation {
 type Query {
   user(id: String!): User!
   users(skip: Int = 0, take: Int = 50, ids: [ID!], name: String, order: String = "DESC", fieldSort: String = "updatedAt"): ListUsers!
+  login(user: LoginUserInput!): LoginResult!
+  refreshToken: String!
 }
 
 type User {
   id: ID!
   name: String!
   email: Email!
+  password: String!
+  permissions: [String!]!
   telephone: String
   birthDate: Date
   createdAt: Date!
