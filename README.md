@@ -88,7 +88,7 @@ $ npm run test:cov
 * [NestJS](https://nestjs.com/)
 * [Fastify](https://fastify.io/)
 * [TypeORM](https://typeorm.io/)
-* [TypeGraphQL](https://typegraphql.ml/)
+* [TypeGraphQL](https://typegraphql.com/)
 * [Jest](https://jestjs.io/)
 * [EasyGraphQL Tester](https://easygraphql.com/docs/easygraphql-tester/overview/)
 * [NPM](https://yarnpkg.com/)
