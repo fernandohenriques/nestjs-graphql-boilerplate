@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "start:dev": "ts-node-dev --respawn --transpileOnly ./src/main.ts",
+    "start:dev": "ts-node-dev --respawn --transpile-only ./src/main.ts",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
