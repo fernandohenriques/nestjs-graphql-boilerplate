@@ -23,6 +23,23 @@ services:
       - mynet
     command: "npm run start:dev"
 
+  mongo-express:
+    image: mongo-express
+    ports:
+      - ${MONGO_EXPRESS_PORT}:8081
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGO_EXPRESS_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
+      - ME_CONFIG_MONGODB_PORT=${MONGO_PORT}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
+    links:
+      - mongodb:mongo
+    depends_on:
+      - mongodb
+    networks:
+      - mynet
+
   mongodb:
     container_name: ${MONGO_HOST}
     image: mongo:latest
