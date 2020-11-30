@@ -23,21 +23,6 @@ services:
       - mynet
     command: "npm run start:dev"
 
-  mongodb:
-    container_name: ${MONGO_HOST}
-    image: mongo:latest
-    environment:
-      - MONGO_INITDB_DATABASE=${MONGO_DATABASE_NAME}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-    ports:
-      - ${MONGO_PORT}:${MONGO_PORT}
-    volumes:
-      - ./docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
-      - mongo-storage:/data/db
-    networks:
-      - mynet
-
   mongo-express:
     image: mongo-express
     ports:
@@ -52,6 +37,21 @@ services:
       - mongodb:mongo
     depends_on:
       - mongodb
+    networks:
+      - mynet
+
+  mongodb:
+    container_name: ${MONGO_HOST}
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DATABASE_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    volumes:
+      - ./docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - mongo-storage:/data/db
     networks:
       - mynet
 
