@@ -14,12 +14,14 @@ describe('UsersModule (Queries e Mutations)', () => {
   it('Should pass if the mutation is valid', done => {
     const name: string = faker.name.findName();
     const email: string = faker.internet.email();
+    const password: string = faker.internet.password();
 
     const mutation: string = `
       mutation saveUser($user: CreateUserInput!) {
         saveUser(userInput: $user) {
           name
           email
+          password
         }
       }
     `;
@@ -27,6 +29,7 @@ describe('UsersModule (Queries e Mutations)', () => {
       user: {
         name,
         email,
+        password,
       },
     });
     done();
