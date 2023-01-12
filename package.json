@@ -36,7 +36,7 @@
     "@nestjs/platform-fastify": "^6.10.13",
     "@nestjs/typeorm": "^6.2.0",
     "apollo-server-fastify": "^2.9.15",
-    "class-validator": "^0.11.0",
+    "class-validator": "^0.14.0",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
     "helmet": "^3.21.2",
